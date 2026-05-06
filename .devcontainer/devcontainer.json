@@ -1,8 +1,20 @@
 {
 	"name": "Node.js & TypeScript",
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
-	"postCreateCommand": [
-		"bash",
-		"../.devcontainer/postCreate.sh"
-	]
+
+	"forwardPorts": [5173],
+
+	"postCreateCommand": "npm install",
+
+	"containerEnv": {
+		"VITE_API_TARGET": "http://host.docker.internal:5083"
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint"
+			]
+		}
+	}
 }
