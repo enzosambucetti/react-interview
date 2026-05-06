@@ -110,3 +110,14 @@ Connection status (`connected`, `connecting`, `disconnected`) is shown as a visu
 - **No styling library**: plain CSS with variables and media queries. Simple, readable, no extra build overhead.
 - **No local cache or complex optimistic updates**: operations wait for the server response before updating the UI. The `isSaving` flag provides sufficient feedback.
 - **No external state library**: `useReducer` + Context was enough for the project's scale.
+
+## Future Improvements
+
+- **Frontend automated tests**: add Vitest + React Testing Library for reducer/actions, API mapping, error states, and key component flows. Add Playwright if browser-level E2E coverage becomes important.
+- **Production configuration**: move API and SignalR URLs to explicit environment files per environment, validate required env vars at startup, and document deployment-specific values.
+- **Data fetching layer**: consider TanStack Query or SWR if the app grows beyond this challenge. That would centralize caching, request deduplication, retries, and stale-data handling.
+- **Optimistic updates**: for a more responsive production UI, apply optimistic local updates with rollback on API failure, especially for item toggles and deletes.
+- **Accessibility audit**: add keyboard-flow checks, focus management for the item detail overlay, and automated accessibility checks in CI.
+- **Large-list performance**: add pagination, filtering, or virtualization if TodoLists can contain many items. The current full refresh strategy is simple and correct for challenge scale.
+- **Observability**: add frontend error reporting and basic telemetry for failed API calls, SignalR reconnects, and slow refreshes in a production environment.
+- **Component extraction**: if UI behavior grows, split repeated form/edit controls into smaller reusable components; for now the current structure is intentionally direct.
