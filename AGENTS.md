@@ -142,7 +142,7 @@ Creating, updating, or deleting local data can enqueue outbound sync in Hangfire
 
 `TodoApi` polls inbound changes through Hangfire every minute and publishes SignalR events to `/hubs/todo-updates`. Subscribe to the client event `todoUpdated`. Payload fields include `eventType`, `entityType`, `entityId`, `todoListId`, `source`, `occurredAt`, `payload`, and `correlation_id`.
 
-SignalR connection startup uses `connection.start()` from `@microsoft/signalr`. `withAutomaticReconnect()` only handles reconnects after a connection was established. The current frontend makes one initial start attempt; if TodoApi is not running when Vite starts, the UI can remain `Realtime off` until the page is refreshed. Add an initial-start retry loop before relying on startup order independence.
+SignalR connection startup uses `connection.start()` from `@microsoft/signalr`. `withAutomaticReconnect()` only handles reconnects after a connection was established, so the frontend also implements an initial-start retry loop with backoff for cases where TodoApi is not running when Vite starts.
 
 When a record is created or updated directly in `ExternalApi`, the frontend does not see it immediately from that POST. The flow is:
 
